@@ -1,0 +1,7 @@
+<div class="d-flex justify-content-center align-items-center flex-column">
+  <h2>{{ type_of_request }} Category</h2>
+  <form method="POST">{% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save</button>
+  </form>
+</div>  

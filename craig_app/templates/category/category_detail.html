@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title%} 
+  <h1 class="text-center">{{category.name}}</h1>
+{% endblock%}
+
+{% block content %}
+
+  <div class='d-flex flex-column justify-content-between flex-fill px-5 flex-wrap'>
+    {% if posts %}
+
+    {% for post in posts %}
+      <div>
+      {{post.datepublished}}
+      <a href="{% url 'post_detail' category_id=category.id post_id=post.id %}">{{post.title}}</a>
+      </div>
+    {% endfor %}
+
+    {% else%}
+      <p class="text-center">No Posts</p>
+    {% endif %}
+    <br>
+    </div>
+    <footer class="d-flex flex-row justify-content-around ">
+    <div class="px-5">
+    <a href="{% url 'edit_category' category_id=category.id %}"> Edit category</a>
+    </div>
+    <div class="px-5">
+    <form name="delete_category" method="POST" action="{% url 'delete_category' category_id=category.id %}">
+      {% csrf_token %}
+      <input type="submit" value="Delete category"</>
+    </form>
+    </div>
+    </footer>
+
+{% endblock %}

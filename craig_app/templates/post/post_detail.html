@@ -1,0 +1,13 @@
+  <div class="d-flex justify-content-center align-items-center flex-column">
+    <h2>{{post.title}}</h2>
+    <p>Description: {{post.description}}</p>
+    <p>Date: {{post.created_at}}</p>
+  
+    <a href="{% url 'edit_post' category_id=category.id post_id=post.id %}"> Edit Post</a>
+    <br>
+    <br>
+    <form name="delete_category" method="POST" action="{% url 'delete_post' category_id=category.id car_id=car.id %}">
+      {% csrf_token %}
+      <input type="submit" value="Delete post" />
+    </form>
+  </div>
