@@ -1,5 +1,17 @@
-<h2>{{ type_of_request }} Post</h2>
-<form method="POST">{% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Save</button>
-</form>
+{% extends 'base.html' %}
+
+{% block title %} 
+<h2 class="text-center">{{ type_of_request }} Post</h2>
+{% endblock %}
+
+{% block content %}
+  <div class="d-flex justify-content-center">
+    <form method="POST">{% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">Save</button>
+    </form>
+    <div class="px-5">
+     <a href="{{request.META.HTTP_REFERER}}">Back</a>
+    </div>  
+  </div>
+{% endblock %}

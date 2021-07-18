@@ -1,7 +1,18 @@
-<div class="d-flex justify-content-center align-items-center flex-column">
-  <h2>{{ type_of_request }} Category</h2>
-  <form method="POST">{% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Save</button>
-  </form>
-</div>  
+{% extends 'base.html' %}
+
+{% block title %} 
+<h2 class="text-center">{{ type_of_request }} Category</h2> 
+{% endblock %}
+
+{% block content %}
+  <div class="d-flex justify-content-center align-items-center flex-column">
+    <form method="POST">{% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">Save</button>
+    </form>
+    <div class="px-5">
+     <a href="{{request.META.HTTP_REFERER}}">Back</a>
+    </div>  
+  </div>
+  
+{% endblock %}

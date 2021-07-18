@@ -7,15 +7,22 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ STATIC_URL }}/static/styles.css">
 
     <title>Craigslist JR</title>
   </head>
   <body>
+    {% load static %}
     <nav class="navbar navbar-dark bg-dark justify-content-between">
       <div>
           <a class="navbar-brand text-white" href="{% url 'home' %}">Craigslist Jr</a>
           <a href="{% url 'category_list' %}" class="navbar-brand text-white">All Categories</a>
+          <a href="{% url 'new_category' %}" class="navbar-brand text-white"> New Category</a>
         </div>  
+      <div>
+      {% comment %} This route doesn't require category id because it can be accessed from homepage {% endcomment %}
+      <a class="navbar-brand text-white" href="{% url 'new_post_home' %}"> New Post</a>
+    </div>
     </nav>
 
     <div class="container">

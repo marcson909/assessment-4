@@ -6,15 +6,16 @@
 
 {% block content %}
 
-<div class='d-flex flex-row justify-content-between flex-fill px-5 flex-wrap'>
+<div class='row p-2 row-cols-2'>
+{% comment %} same concept as homepage category list. Having this separate makes it possible to limit the number of categories on the homepage and have this page show all...but right now they show the same thing {% endcomment %}
   {% for c in all_categories %}
     {% if not c.parent %}
-    <ul class="list-group text-center">
-      <a class="border" href="{% url 'category_detail' category_id=c.id %}" >{{ c.name }}</a>
+    <ul class="list-group text-center col">
+      <a class="border bg-info text-dark" href="{% url 'category_detail' category_id=c.id %}" >{{ c.name }}</a>
 
       {% for category in all_categories %}
         {% if category.parent.name == c.name %}
-          <li class="list-group-item"><a class="border" href="{% url 'category_detail' category_id=category.id %}" >{{ category.name }}</a></li>
+          <li class="list-group-item bg-light text-dark"><a class="text-dark" href="{% url 'category_detail' category_id=category.id %}" >{{ category.name }}</a></li>
         {%endif%}
       {% endfor%}
     </ul>

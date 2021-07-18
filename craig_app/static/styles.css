@@ -1,0 +1,18 @@
+
+.postdate {
+  color: gray;
+  font-size: 11px;
+  line-height: 22px;
+  margin-right: 2px;
+}
+
+.result-info {
+    line-height: 20px;
+    margin: 0;
+    text-overflow: ellipsis;
+}
+
+.result-row {
+    max-height: 200px;
+    overflow: hidden;
+}

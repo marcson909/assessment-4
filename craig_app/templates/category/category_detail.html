@@ -6,31 +6,75 @@
 
 {% block content %}
 
-  <div class='d-flex flex-column justify-content-between flex-fill px-5 flex-wrap'>
-    {% if posts %}
+    <div class='d-flex flex-column justify-content-between px-2'>
+    <ul class='list-group'>
 
-    {% for post in posts %}
-      <div>
-      {{post.datepublished}}
-      <a href="{% url 'post_detail' category_id=category.id post_id=post.id %}">{{post.title}}</a>
-      </div>
-    {% endfor %}
-
-    {% else%}
-      <p class="text-center">No Posts</p>
-    {% endif %}
-    <br>
+      {% comment %} if a category has children we want to display the posts for the children as well as the parent category. This top portion checks if category has children and then if the category has posts so we can prioritze the parent category posts first {% endcomment %}
+      {% if all_children %}
+        {% if posts %}
+          {% for post in posts %}
+          <li class='list-group-item result-row'>
+            <div class='result-info'>
+              <span class='postdate'>
+              {{post.datepublished}}
+              </span>
+              <a href="{% url 'post_detail' category_id=category.id post_id=post.id %}">{{post.title}}</a>
+            </div>
+          </li>
+          {% endfor %}
+          {% comment %} endif for if posts {% endcomment %}
+        {% endif %}
+        {% comment %} here we get all the posts for every child category and show those in the detail page for a parent category {% endcomment %}
+        {% for child in all_children %}
+          {% for post in child.posts.all %}
+            <li class='list-group-item result-row'>
+              <div class='result-info'>
+                <span class='postdate'>
+                  {{post.datepublished}}
+                </span>
+                <a href="{% url 'post_detail' category_id=child.id post_id=post.id %}">{{post.title}}</a>
+              </div>
+            </li>
+          {% endfor %}
+        {% endfor %}
+        {% comment %} if there are no children categories we just show the posts if there are any {% endcomment %}
+        {% elif posts %}
+          {% for post in posts %}
+          <li class='list-group-item result-row'>
+            <div class='result-info'>
+              <span class='postdate'>
+              {{post.datepublished}}
+              </span>
+              <a href="{% url 'post_detail' category_id=category.id post_id=post.id %}">{{post.title}}</a>
+            </div>
+          </li>
+          {% endfor %}
+          {% comment %} and display no posts if no posts {% endcomment %}
+        {% else %}
+        <li class='list-group-item'>
+          <p class="text-center">No Posts</p>
+        </li>
+      {% endif %}
+    </ul>
+      <br>
     </div>
-    <footer class="d-flex flex-row justify-content-around ">
+    {% comment %} footer for edit, delete, and new button/CRUD operations {% endcomment %}
+  <footer class="d-flex flex-row justify-content-around ">
     <div class="px-5">
-    <a href="{% url 'edit_category' category_id=category.id %}"> Edit category</a>
+      <a class="text-dark" href="{% url 'edit_category' category_id=category.id %}"> Edit category</a>
     </div>
     <div class="px-5">
-    <form name="delete_category" method="POST" action="{% url 'delete_category' category_id=category.id %}">
-      {% csrf_token %}
-      <input type="submit" value="Delete category"</>
-    </form>
+      <form name="delete_category" method="POST" action="{% url 'delete_category' category_id=category.id %}">
+        {% csrf_token %}
+        <input type="submit" value="Delete category"</>
+      </form>
     </div>
-    </footer>
+    <div class="px-5">
+      <a class="text-dark" href="{% url 'new_post' category_id=category.id %}">Create a New Post for {{category.name}}</a>
+    </div>
+    <div class="px-5">
+     <a class="text-dark" href="{{request.META.HTTP_REFERER}}">Back</a>
+    </div>
+  </footer>
 
 {% endblock %}
